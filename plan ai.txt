@@ -131,6 +131,4 @@ Jasne, spróbujmy zmieścić cały plan w krótszym czasie. Przyspieszymy tempo 
 - Przygotowanie prezentacji: demonstracja działania interfejsu.
 
 #### Ostatnie poprawki
-- Przegląd kodu, usuwanie błędów, optymalizacja działania.
-
-Po zakończeniu tego planu będziesz mieć działający interfejs głosowy, który potrafi rozpoznawać mowę, odpowiadać na polecenia i wykonywać zadania na komputerze. Powodzenia! Jeśli masz pytania lub napotkasz problemy, chętnie pomogę.
+- Przegląd kodu, usuwanie błędów, optymalizacja działania.s

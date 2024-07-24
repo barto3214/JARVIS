@@ -2,7 +2,7 @@ import speech_recognition as sr
 import pyttsx3
 import subprocess
 import datetime
-import urllib.parse  # Dodaj import modułu urllib.parse
+import urllib.parse
 
 # Inicjalizacja rozpoznawania mowy
 recognizer = sr.Recognizer()
@@ -37,7 +37,6 @@ def listen():
                 print(f"Usłyszałem: {command}")
                 return command.lower()
             except sr.UnknownValueError:
-                speak("Nie zrozumiałem, powtórz proszę.")
                 return None
     except Exception as e:
         print(f"Error: {e}")
@@ -62,8 +61,8 @@ def execute_command(command):
     elif "jak mam na imię" in command:  
         speak("Bartek Locksmith")
     elif "jak masz na imię" in command:
-        speak("mam na imię dżarwis")
-    elif "czy koty umieją latać" in  command:
+        speak("mam na imię Lahos, co znaczy life helping operational system")
+    elif "czy koty umieją latać" in command:
         speak("oczywiście że tak")
     elif "zamknij" in command:
         speak("Do widzenia!")
@@ -81,8 +80,12 @@ def execute_command(command):
         speak("Nie rozpoznano polecenia")
 
 if __name__ == "__main__":
-    speak("Cześć Bartek, co chcesz zrobić?")
+    speak("Cześć Bartek, jestem gotowy do pracy.")
     while True:
-        command = listen()
-        if command:
-            execute_command(command)
+        print("Nasłuchuję wywołania 'Jarvis'...")
+        trigger = listen()
+        if trigger and "jarvis" in trigger:
+            speak("Słucham cię.")
+            command = listen()
+            if command:
+                execute_command(command)
