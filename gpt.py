@@ -11,6 +11,7 @@ recognizer = sr.Recognizer()
 engine = pyttsx3.init()
 
 # Wybór głosu polskiego
+
 voices = engine.getProperty('voices')
 for voice in voices:
     if 'Microsoft Paulina Desktop' in voice.name:
