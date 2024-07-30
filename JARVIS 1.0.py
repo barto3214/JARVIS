@@ -29,10 +29,25 @@ def searcher(command):
         return True
     return False
 
-def recognize_speech(prompt="Słucham...", language="pl-PL"):
+def recognize_speechtwo(prompt="Słucham...", language="pl-PL"):
     while True:
         with recognition.Microphone() as mikro:
             speak("")
+            print(prompt)                                                               #Protokół rozpoznawania mowy
+            audiodata = recognizer.listen(mikro)
+        try:
+            speech_text = recognizer.recognize_google(audiodata, language=language)
+            print("Usłyszałem: ", speech_text)
+            return speech_text
+        except recognition.UnknownValueError:
+            speak("Nie zrozumiałem. Spróbuj ponownie.")
+        except recognition.RequestError as error:
+            speak(f"Błąd: {error}")
+
+def recognize_speech(prompt="Słucham...", language="pl-PL"):
+    while True:
+        with recognition.Microphone() as mikro:
+            speak(prompt)
             print(prompt)                                                               #Protokół rozpoznawania mowy
             audiodata = recognizer.listen(mikro)
         try:
@@ -53,10 +68,11 @@ for voice in voices:
 
 speak("Bartek, jestem gotowy do pracy")
 
-chrome_path = r"C:\Program Files\Google\Chrome\Application\chrome.exe"              #Ścieżka do Chrome
-
+chrome_path = r"C:\Program Files\Google\Chrome\Application\chrome.exe"              #Ścieżki 
+steam_path = r"C:\Program Files (x86)\Steam\Steam.exe"    
+    
 while end:
-    speech_text = recognize_speech()
+    speech_text = recognize_speechtwo()
     if "jarvis" in speech_text.lower():                                             
         command = speech_text.lower().replace("jarvis", "").strip()
         
@@ -71,12 +87,32 @@ while end:
                 speak(f"Obecnie jest {now}")
                 
             case "ustawienia mowy":
-                speak("Poproszę kod admina")
                 code = recognize_speech("Czekam na kod...")                                             #Prostsze funkcjonalności
                 
                 if code == "1285":
                     speak("Jesteś w ustawieniach")
-                    
+                    options = True
+                    while options:
+                        option = recognize_speech("Wybierz ustawienie z takich jak: prędkość mowy lub wyjdź z ustawień")
+                        match option:
+                            case "prędkość mowy":
+                                    rate = engine.getProperty('rate')
+                                    speak(f"Domyślna i aktualna wartość to {rate} słów na minutę")
+                                    decisionoption = recognize_speech("Czy chcesz ją zmienić?")
+                                    while True:
+                                        speedrate_str = recognize_speech("Podaj wartość na jaką chcesz ją zmienić")
+                                        try:
+                                            speedrate = int(speedrate_str)
+                                            engine.setProperty('rate', speedrate)
+                                            speak(f"Prędkość mowy została zmieniona na {speedrate} słów na minutę")
+                                            break
+                                        except ValueError:
+                                            speak("Proszę podać prawidłową liczbę całkowitą")
+                            case "wyjdź z ustawień":
+                                options = False
+                                speak("Wyszedłeś z ustawień")
+                            case _:
+                                speak("Nie ma takiego ustawienia")               
                 else:
                     speak("Rikojkoko kij ci w oko")
                     
@@ -113,6 +149,7 @@ while end:
                 speak(f"Użycie procesora w procentach wynosi {cpupercent}%")
                 
                 print(f"Użycie procesora w procentach wynosi {cpupercent}%")
+                
             case "statystyki karty graficznej":
                 
                 gpustats = GPUinfo.getGPUs()
@@ -149,6 +186,26 @@ while end:
                 speak(f"Wolne miejsce na dysku to {diskusage.free / (1024 ** 3):.2f} Gigabajtów")
                 speak(f"Użycie dysku to {diskusage.percent}%")
                 
+            case "otwórz green hell" | "otwórz green hella":
+                try:
+                    subprocess.Popen([steam_path,"-applaunch","815370"])
+                    speak("Otwieram grę")
+                except FileNotFoundError:
+                    speak("Gra nie została odnaleziona, sprawdź poprawność wszystkich ścieżek dostępu")
+                except Exception as e:
+                    print(f"Error: {e}")
+                    speak("Wystąpił błąd podczas otwierania gry.")
+
+            case "otwórz kerbal space program":                                             #Otwieranie gier 
+                try:
+                    subprocess.Popen([steam_path,"-applaunch","220200"])
+                    speak("Otwieram grę")
+                except FileNotFoundError:
+                    speak("Gra nie została odnaleziona, sprawdź poprawność wszystkich ścieżek dostępu")
+                except Exception as e:
+                    print(f"Error: {e}")
+                    speak("Wystąpił błąd podczas otwierania gry.")
+                    
             case "wyłącz się" | "zamknij":
                 speak("Do widzenia")
                 end = False
