@@ -20,6 +20,9 @@ import numpy
 from scipy.io.wavfile import write                  #moduły redukcji szumów
 import scipy.signal
 
+
+
+
 engine = speech.init()
 end = True
 recognizer = recognition.Recognizer()
@@ -234,4 +237,3 @@ while end:
                 
     else:
         print("Komenda nie zawierała słowa JARVIS")
-        
