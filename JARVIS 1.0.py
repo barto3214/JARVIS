@@ -1,11 +1,24 @@
 import pyttsx3 as speech
-import speech_recognition as recognition
-import datetime as time                                     #Wczytanie modułów
+import speech_recognition as recognition            #moduły mowy
+
+
+import datetime as time                                                                 #Wczytanie modułów
+
 import subprocess
-import pyautogui as fileoperational
+import os                                           #działania w systemie
+
+import pyautogui as fileoperational                 #działania z plikami
+
 import psutil as systeminfo
-import GPUtil as GPUinfo
-import urllib.parse
+import GPUtil as GPUinfo                            #moduły systemowe
+
+import urllib.parse                                 #moduły url
+
+from pydub import AudioSegment
+from pydub.playback import play
+import numpy 
+from scipy.io.wavfile import write                  #moduły redukcji szumów
+import scipy.signal
 
 engine = speech.init()
 end = True
@@ -33,14 +46,14 @@ def recognize_speechtwo(prompt="Słucham...", language="pl-PL"):
     while True:
         with recognition.Microphone() as mikro:
             speak("")
-            print(prompt)                                                               #Protokół rozpoznawania mowy
+            print(prompt)                                                               #Protokół rozpoznawania mowy 
             audiodata = recognizer.listen(mikro)
         try:
             speech_text = recognizer.recognize_google(audiodata, language=language)
             print("Usłyszałem: ", speech_text)
             return speech_text
         except recognition.UnknownValueError:
-            speak("Nie zrozumiałem. Spróbuj ponownie.")
+            print("Nie zrozumiałem. Spróbuj ponownie.")
         except recognition.RequestError as error:
             speak(f"Błąd: {error}")
 
@@ -55,12 +68,11 @@ def recognize_speech(prompt="Słucham...", language="pl-PL"):
             print("Usłyszałem: ", speech_text)
             return speech_text
         except recognition.UnknownValueError:
-            speak("Nie zrozumiałem. Spróbuj ponownie.")
+            print("Nie zrozumiałem. Spróbuj ponownie.")
         except recognition.RequestError as error:
             speak(f"Błąd: {error}")
 
 voices = engine.getProperty('voices')
-
 for voice in voices:
     if 'Microsoft Paulina Desktop' in voice.name:
         engine.setProperty('voice', voice.id)                                               #Dobranie głosu
@@ -80,12 +92,18 @@ while end:
 
         match command:
             case "przywitaj się":
-                speak("Siemanko")
+                speak("Siemanko, jestem prostym interfacem głosowym zrobionym w języku python przy użyciu różnorakich bibliotek, Jestem na razie tylko początkową wersją, która będzie jednak później rozwijana poprzez różne algorytmy wykorzystywane do sztucznej inteligencji")
                 
             case "podaj godzinę" | "która godzina" | "która jest godzina":
                 now = time.datetime.now().strftime("%H:%M")
                 speak(f"Obecnie jest {now}")
                 
+            case "wyłącz komputer" | "wyłącz system" | "shut the system down":
+                shutdown = recognize_speech("Czy na pewno chcesz wyłączyć urządzenie?")
+                if "tak" in shutdown:
+                    os.system("shutdown /s /t 0")
+                elif "nie" in shutdown:
+                    speak("No to co mi głowę zawracasz")        
             case "ustawienia mowy":
                 code = recognize_speech("Czekam na kod...")                                             #Prostsze funkcjonalności
                 
@@ -103,7 +121,7 @@ while end:
                                         speedrate_str = recognize_speech("Podaj wartość na jaką chcesz ją zmienić")
                                         try:
                                             speedrate = int(speedrate_str)
-                                            engine.setProperty('rate', speedrate)
+                                            engine.setProperty('rate', speedrate)                               #Ustawienia mowy
                                             speak(f"Prędkość mowy została zmieniona na {speedrate} słów na minutę")
                                             break
                                         except ValueError:
@@ -216,3 +234,4 @@ while end:
                 
     else:
         print("Komenda nie zawierała słowa JARVIS")
+        
