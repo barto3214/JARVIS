@@ -1,8 +1,6 @@
-Jasne, spróbujmy zmieścić cały plan w krótszym czasie. Przyspieszymy tempo nauki i skondensujemy materiał, abyś mógł opanować wszystko w jak najkrótszym czasie. Oto plan na 30 dni, który uwzględnia intensywną naukę i praktykę.
+Plan Nauki na 30 Dni
 
-### Plan Nauki na 30 Dni
-
-#### Tydzień 1: Podstawy Pythona
+Tydzień 1: Podstawy Pythona
 1. **Dzień 1**: Instalacja Pythona i środowiska IDE
     - Zainstaluj Python (z [python.org](https://www.python.org/))
     - Zainstaluj IDE (np. PyCharm, Visual Studio Code)
@@ -32,7 +30,7 @@ Jasne, spróbujmy zmieścić cały plan w krótszym czasie. Przyspieszymy tempo 
     - Używanie modułu `os` do wykonywania poleceń systemowych
     - Prosty skrypt do tworzenia i usuwania plików
 
-#### Tydzień 2: Rozpoznawanie i Synteza Mowy
+ Tydzień 2: Rozpoznawanie i Synteza Mowy
 8. **Dzień 8**: Wprowadzenie do rozpoznawania mowy
     - Instalacja `speech_recognition`
     - Prosty skrypt do rozpoznawania mowy z mikrofonu
@@ -54,7 +52,7 @@ Jasne, spróbujmy zmieścić cały plan w krótszym czasie. Przyspieszymy tempo 
 13. **Dzień 14**: Zaawansowane polecenia
     - Dodawanie funkcji otwierania programów (np. notatnik)
 
-#### Tydzień 3: Integracja z Systemem Operacyjnym i Rozszerzanie Funkcjonalności
+ Tydzień 3: Integracja z Systemem Operacyjnym i Rozszerzanie Funkcjonalności
 14. **Dzień 15**: Podstawy subprocess
     - Używanie modułu `subprocess` do uruchamiania aplikacji
 
@@ -70,7 +68,7 @@ Jasne, spróbujmy zmieścić cały plan w krótszym czasie. Przyspieszymy tempo 
 18. **Dzień 21**: Optymalizacja interfejsu
     - Ulepszanie rozpoznawania mowy, dodawanie obsługi błędów
 
-#### Tydzień 4: Dokumentacja, Testowanie i Prezentacja
+ Tydzień 4: Dokumentacja, Testowanie i Prezentacja
 19. **Dzień 22**: Dokumentacja projektu
     - Tworzenie dokumentacji dla użytkowników
 
@@ -86,49 +84,49 @@ Jasne, spróbujmy zmieścić cały plan w krótszym czasie. Przyspieszymy tempo 
 23. **Dzień 29-30**: Podsumowanie i finalizacja projektu
     - Ostatnie poprawki, finalizacja projektu
 
-### Opisy poszczególnych etapów:
+ Opisy poszczególnych etapów:
 
-#### Instalacja Pythona i środowiska IDE
+ Instalacja Pythona i środowiska IDE
 1. **Python**: Pobierz i zainstaluj Pythona z [python.org](https://www.python.org/).
 2. **IDE**: Pobierz i zainstaluj PyCharm z [jetbrains.com](https://www.jetbrains.com/pycharm/download/) lub Visual Studio Code z [code.visualstudio.com](https://code.visualstudio.com/Download).
 
-#### Podstawowe konstrukcje języka
+ Podstawowe konstrukcje języka
 - Zmienne: np. `x = 5`, `name = "Jan"`.
 - Typy danych: int, float, str, list, dict.
 - Operacje arytmetyczne: `+`, `-`, `*`, `/`.
 
-#### Struktury danych
+ Struktury danych
 - Listy: np. `my_list = [1, 2, 3]`.
 - Słowniki: np. `my_dict = {"name": "Jan", "age": 30}`.
 
-#### Kontrola przepływu
+ Kontrola przepływu
 - Instrukcje warunkowe: `if`, `elif`, `else`.
 - Pętle: `for`, `while`.
 
-#### Funkcje i moduły
+ Funkcje i moduły
 - Definiowanie funkcji: `def my_function():`.
 - Importowanie modułów: `import os`.
 
-#### Obsługa plików
+ Obsługa plików
 - Otwieranie: `open("file.txt", "r")`.
 - Czytanie: `file.read()`.
 - Zapisywanie: `file.write("text")`.
 
-#### Podstawy systemowe
+ Podstawy systemowe
 - Moduł `os`: `os.system("command")`.
 - Moduł `subprocess`: `subprocess.run(["notepad.exe"])`.
 
-#### Rozpoznawanie mowy
+ Rozpoznawanie mowy
 - Instalacja `speech_recognition`: `pip install speechrecognition`.
 - Użycie: `recognizer.recognize_google(audio, language="pl-PL")`.
 
-#### Synteza mowy
+ Synteza mowy
 - Instalacja `pyttsx3`: `pip install pyttsx3`.
 - Użycie: `engine.say("text")`, `engine.runAndWait()`.
 
-#### Dokumentacja i prezentacja
+ Dokumentacja i prezentacja
 - Tworzenie dokumentacji: opisy funkcji, instrukcje użytkowania.
 - Przygotowanie prezentacji: demonstracja działania interfejsu.
 
-#### Ostatnie poprawki
-- Przegląd kodu, usuwanie błędów, optymalizacja działania.s
+ Ostatnie poprawki
+- Przegląd kodu, usuwanie błędów, optymalizacja działania.

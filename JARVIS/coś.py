@@ -1,97 +1,35 @@
-import pyttsx3 as speech
-import speech_recognition as recognition
 import datetime as time
-import subprocess
 import os
 import pyautogui as fileoperational
 import psutil as systeminfo
 import GPUtil as GPUinfo
-import urllib.parse
-from pydub import AudioSegment
-from pydub.playback import play
-import numpy
-from scipy.io.wavfile import write
-import scipy.signal
+import subprocess
+from FunkcjeJarvisa import *
 
-from chatterbot import ChatBot
-from chatterbot.trainers import ChatterBotCorpusTrainer
-
-# Inicjalizacja silnika mowy
-engine = speech.init()
-
-# Tworzenie instancji ChatBota
-chatbot = ChatBot('Jarvis')
-trainer = ChatterBotCorpusTrainer(chatbot)
-trainer.train('chatterbot.corpus.polish')
-
-# Funkcja do wypowiadania tekstu
-def speak(text):
-    engine.say(text)
-    engine.runAndWait()
-
-# Funkcja do wyszukiwania w Google
-def searcher(command):
-    if "wyszukaj" in command:
-        searchfraza = command.replace("wyszukaj", "").strip()
-        urlcoded = urllib.parse.quote(searchfraza)
-        search = f"https://www.google.com/search?q={urlcoded}"
-        try:
-            subprocess.Popen([chrome_path, search])
-            speak(f"Wyszukuję frazę {searchfraza} w przeglądarce")
-        except FileNotFoundError:
-            speak("Nie można odnaleźć przeglądarki Chrome. Sprawdź ścieżkę do aplikacji.")
-        return True
-    return False
-
-# Funkcja do rozpoznawania mowy
-def recognize_speech(prompt="Słucham...", language="pl-PL"):
-    recognizer = recognition.Recognizer()
-    while True:
-        with recognition.Microphone() as mikro:
-            speak(prompt)
-            print(prompt)
-            audiodata = recognizer.listen(mikro)
-        try:
-            speech_text = recognizer.recognize_google(audiodata, language=language)
-            print("Usłyszałem: ", speech_text)
-            return speech_text
-        except recognition.UnknownValueError:
-            print("Nie zrozumiałem. Spróbuj ponownie.")
-        except recognition.RequestError as error:
-            speak(f"Błąd: {error}")
-
-# Funkcja do uzyskiwania odpowiedzi od chatbota
-def get_bot_response(text):
-    response = chatbot.get_response(text)
-    return response
-
-# Ustawienie głosu
 voices = engine.getProperty('voices')
 for voice in voices:
     if 'Microsoft Paulina Desktop' in voice.name:
-        engine.setProperty('voice', voice.id)
+        engine.setProperty('voice', voice.id)  # Dobranie głosu
         break
 
 speak("Bartek, jestem gotowy do pracy")
 
-# Ścieżki do aplikacji
-chrome_path = r"C:\Program Files\Google\Chrome\Application\chrome.exe"
+chrome_path = r"C:\Program Files\Google\Chrome\Application\chrome.exe"  # Ścieżki
 steam_path = r"C:\Program Files (x86)\Steam\Steam.exe"
 
-end = True
-while end:
-    speech_text = recognize_speech()
-    if "jarvis" in speech_text.lower():
-        command = speech_text.lower().replace("jarvis", "").strip()
-        print("Przetworzona komenda: ", command)
+end = True  # Upewnij się, że ta zmienna jest ustawiona na True
 
-        if "rozmawiaj" in command:
-            response = get_bot_response(command)
-            speak(response)
-        else:
+while end:
+    speech_text = recognize_speechtwo()  # Zmienna jest pobierana na początku każdej iteracji
+    if speech_text:
+        if "jarvis" in speech_text.lower():
+            command = speech_text.lower().replace("jarvis", "").strip()
+
+            print("Przetworzona komenda: ", command)
+
             match command:
                 case "przywitaj się":
-                    speak("Siemanko, jestem prostym interfacem głosowym zrobionym w języku python przy użyciu różnorakich bibliotek...")
+                    speak("Siemanko, jestem prostym interfejsem głosowym zrobionym w języku pajton przy użyciu różnorakich bibliotek. Jestem na razie tylko początkową wersją, która będzie jednak później rozwijana poprzez różne algorytmy wykorzystywane do sztucznej inteligencji")
 
                 case "podaj godzinę" | "która godzina" | "która jest godzina":
                     now = time.datetime.now().strftime("%H:%M")
@@ -120,7 +58,7 @@ while end:
                                         speedrate_str = recognize_speech("Podaj wartość na jaką chcesz ją zmienić")
                                         try:
                                             speedrate = int(speedrate_str)
-                                            engine.setProperty('rate', speedrate)
+                                            engine.setProperty('rate', speedrate)  # Ustawienia mowy
                                             speak(f"Prędkość mowy została zmieniona na {speedrate} słów na minutę")
                                             break
                                         except ValueError:
@@ -130,6 +68,8 @@ while end:
                                     speak("Wyszedłeś z ustawień")
                                 case _:
                                     speak("Nie ma takiego ustawienia")
+                    else:
+                        speak("Rikojkoko kij ci w oko")
 
                 case "otwórz notatnik":
                     speak("Otwieram Notatnik")
@@ -143,8 +83,10 @@ while end:
                                 while texta:
                                     texttowrite = recognize_speech("Co chcesz zapisać")
                                     fileoperational.write(texttowrite)
-                                    if "przestań pisać" in texttowrite.lower():
+
+                                    if "przestań pisać" in texttowrite.lower():  # Notatnik
                                         texta = False
+
                             case "zamknąć i zapisać":
                                 fileoperational.hotkey('ctrl', 's')
                                 textoend = recognize_speech("Jak nazwać plik?")
@@ -166,6 +108,7 @@ while end:
                         print(f"Wolna pamięć karty graficznej: {gpu.memoryFree}MB")
                         print(f"Używana pamięć karty graficznej: {gpu.memoryUsed}MB")
                         print(f"Temperatura karty graficznej: {gpu.temperature}°C")
+
                         speak(f"Użycie karty graficznej to {gpu.load * 100}%")
                         speak(f"Wolna pamięć karty graficznej to {gpu.memoryFree}Megabajtów")
                         speak(f"Używana pamięć karty graficznej to {gpu.memoryUsed}Megabajtów")
@@ -176,6 +119,7 @@ while end:
                     print(f"Całkowita pamięć: {memoryinfo.total / (1024 ** 3):.2f} GB")
                     print(f"Wolna pamięć: {memoryinfo.available / (1024 ** 3):.2f} GB")
                     print(f"Użycie pamięci: {memoryinfo.percent}%")
+
                     speak(f"Całkowita pamięć RAM to {memoryinfo.total / (1024 ** 3):.2f} Gigabajtów")
                     speak(f"Wolna pamięć RAM to {memoryinfo.available / (1024 ** 3):.2f} Gigabajtów")
                     speak(f"Użycie pamięci RAM to {memoryinfo.percent}%")
@@ -185,20 +129,42 @@ while end:
                     print(f"Całkowita pojemność dysku: {diskusage.total / (1024 ** 3):.2f} GB")
                     print(f"Wolne miejsce na dysku: {diskusage.free / (1024 ** 3):.2f} GB")
                     print(f"Użycie dysku: {diskusage.percent}%")
+
                     speak(f"Całkowita pojemność dysku to {diskusage.total / (1024 ** 3):.2f} Gigabajtów")
                     speak(f"Wolne miejsce na dysku to {diskusage.free / (1024 ** 3):.2f} Gigabajtów")
                     speak(f"Użycie dysku to {diskusage.percent}%")
 
-                case "otwórz przeglądarkę":
-                    speak("Otwieram przeglądarkę")
-                    subprocess.Popen([chrome_path])
+                case "otwórz green hell" | "otwórz green hella":
+                    try:
+                        subprocess.Popen([steam_path, "-applaunch", "815370"])
+                        speak("Otwieram grę")
+                    except FileNotFoundError:
+                        speak("Gra nie została odnaleziona, sprawdź poprawność wszystkich ścieżek dostępu")
+                    except Exception as e:
+                        print(f"Error: {e}")
+                        speak("Wystąpił błąd podczas otwierania gry.")
 
-                case "otwórz steam":
-                    speak("Otwieram Steam")
-                    subprocess.Popen([steam_path])
+                case "otwórz kerbal space program":
+                    try:
+                        subprocess.Popen([steam_path, "-applaunch", "220200"])
+                        speak("Otwieram grę")
+                    except FileNotFoundError:
+                        speak("Gra nie została odnaleziona, sprawdź poprawność wszystkich ścieżek dostępu")
+                    except Exception as e:
+                        print(f"Error: {e}")
+                        speak("Wystąpił błąd podczas otwierania gry.")
+
+                case "wyłącz się" | "zamknij":
+                    speak("Do widzenia")
+                    end = False
 
                 case _:
-                    if searcher(command):
-                        break
-                    else:
-                        speak("Nie rozumiem polecenia")
+                    if not searcher(command):
+                        speak("Nie zrozumiano komendy")
+
+            time.sleep(1)  # Opóźnienie 1 sekundy po każdej komendzie
+
+        else:
+            print("Komenda nie zawierała słowa JARVIS")
+    else:
+        print("Nie zrozumiano mowy")
