@@ -18,13 +18,24 @@ for voice in voices:
 speak("Bartek, jestem gotowy do pracy")
     
 steam_path = r"C:\Program Files (x86)\Steam\Steam.exe"                      #Ścieżki
+speak("Aby wybrać tryb mówienia napisz mówienie, a aby tryb pisania napisz pisanie")
+interaction_method = input("")
 
+if "mów" in interaction_method.lower():
+    speaking_mode = True
+else:
+    speaking_mode = False
+
+speak("Bartek, jestem gotowy do pracy")
 
 while end:
-    speech_text = recognize_speechtwo()
+    if speaking_mode:
+        speech_text = recognize_speechtwo()
+    else:
+        speech_text = input("Wpisz komendę: ")  
+
     if "jarvis" in speech_text.lower():
         command = speech_text.lower().replace("jarvis", "").strip()
-
         print("Przetworzona komenda: ", command)
 
         match command:
