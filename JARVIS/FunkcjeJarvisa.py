@@ -28,12 +28,14 @@ def searcher(command):
         return True
     return False
 
-def recognize_speechtwo(prompt="Słucham...", language="pl-PL"):
+def recognize_speechtwo(prompt="Słucham...", language="pl-PL"): 
+    recognizer = recognition.Recognizer()
     while True:
         with recognition.Microphone() as mikro:
             speak("")
             print(prompt)
-            audiodata = recognizer.listen(mikro, timeout=7)
+            
+            audiodata = recognizer.listen(mikro, timeout=7, phrase_time_limit=7)
         try:
             speech_text = recognizer.recognize_google(audiodata, language=language)
             print("Usłyszałem: ", speech_text)
@@ -43,12 +45,16 @@ def recognize_speechtwo(prompt="Słucham...", language="pl-PL"):
         except recognition.RequestError as error:
             speak(f"Błąd: {error}")
 
+
+import speech_recognition as recognition
+
 def recognize_speech(prompt="Słucham...", language="pl-PL"):
+    recognizer = recognition.Recognizer()
     while True:
         with recognition.Microphone() as mikro:
             speak(prompt)
             print(prompt)
-            audiodata = recognizer.listen(mikro, timeout=7)
+            audiodata = recognizer.listen(mikro, timeout=7, phrase_time_limit=7)
         try:
             speech_text = recognizer.recognize_google(audiodata, language=language)
             print("Usłyszałem: ", speech_text)

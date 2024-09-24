@@ -15,7 +15,7 @@ for voice in voices:
         engine.setProperty('voice', voice.id)                                               #Dobranie głosu
         break
 
-speak("Bartek, jestem gotowy do pracy")
+speak("Najwyższa instancjo, jestem gotowy do pracy")
     
 steam_path = r"C:\Program Files (x86)\Steam\Steam.exe"                      #Ścieżki
 speak("Aby wybrać tryb mówienia napisz mówienie, a aby tryb pisania napisz pisanie")
@@ -26,7 +26,7 @@ if "mów" in interaction_method.lower():
 else:
     speaking_mode = False
 
-speak("Bartek, jestem gotowy do pracy")
+
 
 while end:
     if speaking_mode:
