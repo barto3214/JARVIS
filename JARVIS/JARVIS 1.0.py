@@ -18,6 +18,7 @@ for voice in voices:
 speak("Bartek, jestem gotowy do pracy")
     
 steam_path = r"C:\Program Files (x86)\Steam\Steam.exe"                      #Ścieżki
+
 speak("Aby wybrać tryb mówienia napisz mówienie, a aby tryb pisania napisz pisanie")
 interaction_method = input("")
 
