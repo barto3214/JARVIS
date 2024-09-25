@@ -9,10 +9,12 @@ import GPUtil as GPUinfo                            #moduły systemowe
 
 from FunkcjeJarvisa import *
 
+print("Bot active")
+
 voices = engine.getProperty('voices')
 for voice in voices:
     if 'Microsoft Paulina Desktop' in voice.name:
-        engine.setProperty('voice', voice.id)                                               #Dobranie głosu
+        engine.setProperty('voice', voice.id)                                               #Dobranie głos
         break
 
 speak("Bartek, jestem gotowy do pracy")
