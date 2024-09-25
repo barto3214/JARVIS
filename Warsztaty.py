@@ -40,7 +40,7 @@ def szukacz(wybor):
         urlcoded = urllib.parse.quote(searchfraza)
         search = f"https://www.google.com/search?q={urlcoded}"
 
-        try:  # Wyszukiwanie w sieci
+        try: 
             subprocess.Popen([chrome_path, search])
             print(f"Wyszukuję frazę {searchfraza} w przeglądarce")
         except FileNotFoundError:
@@ -53,19 +53,18 @@ def szukacz(wybor):
 def main():
     print("Wpisz, którą kategorię chcesz sprawdzić: procesor, karta graficzna, pamięć ram, dysk")
     print("Jeżeli chcesz coś wyszukać, wpisz 'szukaj' i frazę, którą chcesz wyszukać")
-    print("Aby wyjść z programu, naciśnij 'Escape'")
+    print("Aby wyjść z programu, naciśnij 'q'")
 
     while True:
-        if keyboard.is_pressed('esc'):
-            print("Zakończanie programu...")
-            break
-
         wybor = input("Twój wybór: ").lower()
 
         if "szukaj" in wybor:
             szukacz(wybor)
         else:
             pokaz_statystyki(wybor)
+        if wybor == 'q':
+            break
+            
 
 
 if __name__ == "__main__":
