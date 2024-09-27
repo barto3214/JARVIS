@@ -1,6 +1,5 @@
 import psutil as systeminfo
 import GPUtil as GPUinfo
-import keyboard
 import urllib.parse
 import subprocess
 
